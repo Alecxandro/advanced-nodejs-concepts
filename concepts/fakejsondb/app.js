@@ -29,7 +29,7 @@ export class Generate_Db {
         }
 
         await writeFile(
-          `./json_db/${this.registerType}.json`,
+          `${folder}${this.registerType}.json`,
           jsonUsers,
           (err) => {
             if (err) throw err;
@@ -45,5 +45,5 @@ export class Generate_Db {
   }
 }
 
-const db = new Generate_Db(50, "first_name");
+const db = new Generate_Db(50, "city");
 await db.generate();
