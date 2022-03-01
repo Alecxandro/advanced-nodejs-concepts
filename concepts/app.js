@@ -1,39 +1,49 @@
 import casual from "casual";
 import { randomUUID } from "crypto";
 import { writeFile } from "fs/promises";
+import { existsSync, mkdirSync } from "fs";
 
-const globalRegisterType = "first_name";
+const folder = "./json_db";
 
-const DB_GENERATOR = async (registers, registerType) => {
-  const users = [];
-  registerType = globalRegisterType;
-  try {
-    for (let i = 0; i < registers; i++) {
-      users.push({
-        id: randomUUID(),
-        [registerType]: `${casual[registerType]}`,
-      });
-    }
-
-    return users;
-  } catch (error) {
-    console.log(`Error details: ${error}`);
+export class Generate_Db {
+  constructor(registers_numbers, registerType) {
+    this.registers_numbers = registers_numbers;
+    this.registerType = registerType;
   }
-};
 
-const USERS = await DB_GENERATOR(50, globalRegisterType);
+  async db_generator() {
+    const users = [];
+    try {
+      for (let i = 0; i < this.registers_numbers; i++) {
+        users.push({
+          id: randomUUID(),
+          [this.registerType]: casual[this.registerType],
+        });
+      }
 
-const toJSON = JSON.stringify(USERS);
+      const jsonUsers = JSON.stringify(users);
 
-async function writeJSON() {
-  try {
-    await writeFile(`./json_db/${globalRegisterType}.json`, toJSON, (err) => {
-      if (err) throw err;
-      console.log("data saved!");
-    });
-  } catch (err) {
-    console.log(err);
+      try {
+        if (!existsSync(folder)) {
+          mkdirSync(folder);
+        }
+
+        await writeFile(
+          `./json_db/${this.registerType}.json`,
+          jsonUsers,
+          (err) => {
+            if (err) throw err;
+            console.log("data saved");
+          }
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 
-await writeJSON();
+const db = new Generate_Db(50, "country");
+await db.db_generator();
