@@ -3,7 +3,7 @@ import { randomUUID } from "crypto";
 import { writeFile } from "fs/promises";
 import { existsSync, mkdirSync } from "fs";
 
-const folder = "./json_db";
+const folder = "./json_db/";
 
 export class Generate_Db {
   constructor(registers_numbers, registerType) {
@@ -11,7 +11,7 @@ export class Generate_Db {
     this.registerType = registerType;
   }
 
-  async db_generator() {
+  async generate() {
     const users = [];
     try {
       for (let i = 0; i < this.registers_numbers; i++) {
@@ -45,5 +45,5 @@ export class Generate_Db {
   }
 }
 
-const db = new Generate_Db(50, "country");
-await db.db_generator();
+const db = new Generate_Db(50, "first_name");
+await db.generate();
