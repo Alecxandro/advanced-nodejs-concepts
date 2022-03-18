@@ -3,7 +3,7 @@ import { randomUUID } from "crypto";
 import { writeFile } from "fs/promises";
 import { existsSync, mkdirSync } from "fs";
 
-const folder = "./json_db/";
+export const default_folder = "./json_db/";
 
 export class Generate_Db {
   constructor(registers_numbers, registerType) {
@@ -24,12 +24,12 @@ export class Generate_Db {
       const jsonUsers = JSON.stringify(users);
 
       try {
-        if (!existsSync(folder)) {
-          mkdirSync(folder);
+        if (!existsSync(default_folder)) {
+          mkdirSync(default_folder);
         }
 
         await writeFile(
-          `${folder}${this.registerType}.json`,
+          `${default_folder}${this.registerType}.json`,
           jsonUsers,
           (err) => {
             if (err) throw err;
@@ -44,6 +44,3 @@ export class Generate_Db {
     }
   }
 }
-
-const db = new Generate_Db(50, "city");
-await db.generate();
