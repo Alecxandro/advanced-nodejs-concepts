@@ -1,9 +1,9 @@
 import casual from "casual";
 import { randomUUID } from "crypto";
 import { writeFile } from "fs/promises";
-import { existsSync, mkdirSync } from "fs";
+import * as syncs from "fs";
 
-export const default_folder = "./json_db/";
+export const DEFAULT_FOLDER = "./json_db/";
 
 export class Generate_Db {
   constructor(registers_numbers, registerType) {
@@ -21,16 +21,14 @@ export class Generate_Db {
         });
       }
 
-      const jsonUsers = JSON.stringify(users);
-
       try {
-        if (!existsSync(default_folder)) {
-          mkdirSync(default_folder);
+        if (!syncs.existsSync(DEFAULT_FOLDER)) {
+          syncs.mkdirSync(DEFAULT_FOLDER);
         }
 
         await writeFile(
-          `${default_folder}${this.registerType}.json`,
-          jsonUsers,
+          `${DEFAULT_FOLDER}${this.registerType}.json`,
+          JSON.stringify(users),
           (err) => {
             if (err) throw err;
             console.log("data saved");
