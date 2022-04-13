@@ -10,14 +10,14 @@ async function readData() {
 }
 
 async function loadDataInDOM() {
-  const fullName = await readData();
+  const fullData = await readData();
 
   const mainList = document.createElement("ul");
   const list = [];
 
-  for (let i = 0; i < fullName.length; i++) {
+  for (let i = 0; i < fullData.length; i++) {
     list.push(document.createElement("li"));
-    list[i].innerHTML = fullName[i][`${FIELDS.fieldName}`];
+    list[i].innerHTML = fullData[i][`${FIELDS.fieldName}`];
     mainList.append(list[i]);
   }
 

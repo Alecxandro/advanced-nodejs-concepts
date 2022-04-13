@@ -3,7 +3,7 @@ import { randomUUID } from "crypto";
 import { writeFile } from "fs/promises";
 import * as syncs from "fs";
 
-export const DEFAULT_FOLDER = "./json_db/";
+const DEFAULT_FOLDER = "./json_db/";
 
 export class Generate_Db {
   constructor(registers_numbers, registerType) {

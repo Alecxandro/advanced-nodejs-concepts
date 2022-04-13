@@ -1,4 +1,4 @@
-import  {Generate_Db}  from "./app.js";
+import  {Generate_Db}  from "./gendbjson.js";
 
 const country = new Generate_Db(50,'country');
 const name = new Generate_Db(50,'name');
